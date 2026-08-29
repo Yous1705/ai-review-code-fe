@@ -1,13 +1,38 @@
-export interface Review {
-  id: string;
-  title: string;
-  description: string;
-  code: string;
-  createdAt: string;
-  updatedAt: string;
-}
+export type ReviewStatus = "PENDING" | "PROCESSING" | "COMPLETED" | "FAILED";
+
+export type Severity = "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
 
 export interface CreateReviewDto {
   code: string;
   language: string;
+}
+
+export interface ReviewIssue {
+  id: string;
+  reviewId: string;
+  severity: Severity;
+  line: number | null;
+  title: string;
+  description: string;
+  suggestion: string | null;
+  createdAt: string;
+}
+
+export interface Review {
+  id: string;
+  userId: string;
+  code: string;
+  language: string;
+  status: ReviewStatus;
+  score: number | null;
+  summary: string | null;
+  createdAt: string;
+  updatedAt: string;
+  issues: ReviewIssue[];
+}
+
+export interface CreateReviewResponse {
+  success: boolean;
+  message: string;
+  data: Review;
 }
