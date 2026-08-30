@@ -36,3 +36,17 @@ export interface CreateReviewResponse {
   message: string;
   data: Review;
 }
+
+export interface ReviewPagination {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+}
+
+export interface FindAllReviewResponse {
+  success: boolean;
+  message: string;
+  data: Review[];
+  meta: ReviewPagination;
+}

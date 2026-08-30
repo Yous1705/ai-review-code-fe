@@ -99,7 +99,7 @@ export default function LoginPage() {
 
         <p className="mt-4 text-center text-sm">
           Belum punya akun?{" "}
-          <a href="auth/register" className="text-blue-600">
+          <a href="/auth/register" className="text-blue-600">
             Register
           </a>
         </p>

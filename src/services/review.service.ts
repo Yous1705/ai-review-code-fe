@@ -1,5 +1,9 @@
 import axiosInstance from "@/lib/axios";
-import { CreateReviewDto, CreateReviewResponse } from "@/type/review.type";
+import {
+  CreateReviewDto,
+  CreateReviewResponse,
+  FindAllReviewResponse,
+} from "@/type/review.type";
 
 export const reviewService = {
   async create(payload: CreateReviewDto): Promise<CreateReviewResponse> {
@@ -7,6 +11,12 @@ export const reviewService = {
       "/review",
       payload,
     );
+
+    return response.data;
+  },
+
+  async findAll(): Promise<FindAllReviewResponse> {
+    const response = await axiosInstance.get<FindAllReviewResponse>("/review");
 
     return response.data;
   },

@@ -41,7 +41,7 @@ export default function RegisterPage() {
         throw new Error(data.message || "Register gagal");
       }
 
-      router.push("/login");
+      router.push("/auth/login");
     } catch (error) {
       setError(error instanceof Error ? error.message : "Terjadi kesalahan");
     } finally {
@@ -111,7 +111,7 @@ export default function RegisterPage() {
 
         <p className="mt-4 text-center text-sm">
           Sudah punya akun?{" "}
-          <a href="auth/login" className="text-blue-600">
+          <a href="/auth/login" className="text-blue-600">
             Login
           </a>
         </p>
