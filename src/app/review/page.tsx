@@ -7,7 +7,7 @@ import { Menu, X, LogOut } from "lucide-react";
 import ReviewSideBar from "@/component/ReviewSideBar";
 
 export default function ReviewPage() {
-  const { review, setReview, historyReview, fetchHistoryReview } = useReview();
+  const { review, setReview, historyTitle, fetchHistoryReview } = useReview();
 
   const [code, setCode] = useState("");
   const [language, setLanguage] = useState("typescript");
@@ -53,7 +53,7 @@ export default function ReviewPage() {
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         toogleSideBar={toogleSideBar}
-        historyReview={historyReview}
+        historyTitle={historyTitle}
       />
 
       <main className="mx-auto max-w-5xl p-6">

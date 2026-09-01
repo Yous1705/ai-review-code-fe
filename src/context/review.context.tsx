@@ -6,8 +6,10 @@ import { reviewService } from "@/services/review.service";
 
 export interface ReviewContextType {
   review: Review | null;
-  historyReview: Review[];
+  historyTitle: Review[];
+  reviewHistory: Review | null;
   fetchHistoryReview: () => Promise<void>;
+  fetchReviewById: (id: string) => Promise<void>;
   setReview: (review: Review | null) => void;
   clearReview: () => void;
 }
@@ -20,15 +22,25 @@ interface ReviewProviderProps {
 
 export function ReviewProvider({ children }: ReviewProviderProps) {
   const [review, setReview] = useState<Review | null>(null);
-  const [historyReview, setHistoryReview] = useState<Review[]>([]);
+  const [historyTitle, setHistoryTitle] = useState<Review[]>([]);
+  const [reviewHistory, setReviewHistory] = useState<Review | null>(null);
 
   const fetchHistoryReview = async () => {
     try {
       const result = await reviewService.findAll();
 
-      setHistoryReview(result.data);
+      setHistoryTitle(result.data);
     } catch (error) {
       console.error("Failed to fetch review history:", error);
+    }
+  };
+
+  const fetchReviewById = async (id: string) => {
+    try {
+      const result = await reviewService.findById(id);
+      setReviewHistory(result.data);
+    } catch (error) {
+      console.error("Failed to fetch review by ID:", error);
     }
   };
 
@@ -44,7 +56,9 @@ export function ReviewProvider({ children }: ReviewProviderProps) {
     <ReviewContext.Provider
       value={{
         review,
-        historyReview,
+        historyTitle,
+        reviewHistory,
+        fetchReviewById,
         fetchHistoryReview,
         setReview,
         clearReview,

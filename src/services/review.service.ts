@@ -20,4 +20,11 @@ export const reviewService = {
 
     return response.data;
   },
+
+  async findById(id: string): Promise<CreateReviewResponse> {
+    const response = await axiosInstance.get<CreateReviewResponse>(
+      `/review/${id}`,
+    );
+    return response.data;
+  },
 };

@@ -3,15 +3,17 @@
 import React from "react";
 import { Menu, X, LogOut } from "lucide-react";
 import { Review } from "@/type/review.type";
+import { useRouter } from "next/navigation";
 
 interface SideBarProps {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   toogleSideBar: () => void;
-  historyReview: Review[];
+  historyTitle: Review[];
 }
 
-function ReviewSideBar({ isOpen, toogleSideBar, historyReview }: SideBarProps) {
+function ReviewSideBar({ isOpen, toogleSideBar, historyTitle }: SideBarProps) {
+  const router = useRouter();
   return (
     <>
       <button
@@ -42,7 +44,7 @@ function ReviewSideBar({ isOpen, toogleSideBar, historyReview }: SideBarProps) {
           </div>
 
           <nav className="space-y-1.5 p-4">
-            {historyReview.map((review) => {
+            {historyTitle.map((review) => {
               const title = review.issues[0]?.title || "No title";
 
               return (
@@ -50,6 +52,10 @@ function ReviewSideBar({ isOpen, toogleSideBar, historyReview }: SideBarProps) {
                   key={review.id}
                   type="button"
                   className="block w-full rounded-lg px-3.5 py-2.5 text-left text-sm font-medium text-slate-400 transition-colors hover:bg-slate-800/60 hover:text-white"
+                  onClick={() => {
+                    router.push(`/review/${review.id}`);
+                    toogleSideBar();
+                  }}
                 >
                   {title}
                 </button>
