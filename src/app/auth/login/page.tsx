@@ -3,6 +3,7 @@
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
+import { authService } from "@/services/auth.service";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -20,31 +21,16 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email,
-            password,
-          }),
-        },
-      );
+      await authService.login({ email, password });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Login gagal");
-      }
-
-      login(data.access_token, data.user);
+      const response = await authService.me();
+      login(response.data.data);
 
       router.push("/review");
-    } catch (error) {
-      setError(error instanceof Error ? error.message : "Terjadi kesalahan");
+    } catch (error: any) {
+      setError(
+        error.response?.data?.message || error.message || "Terjadi kesalahan",
+      );
     } finally {
       setLoading(false);
     }

@@ -12,4 +12,14 @@ export const authService = {
     const response = await axiosInstance.post("/auth/login", payload);
     return response.data;
   },
+
+  async logout() {
+    const response = await axiosInstance.post("/auth/logout");
+    return response.data;
+  },
+
+  async me() {
+    const response = await axiosInstance.get("/auth/me");
+    return response.data;
+  },
 };

@@ -1,13 +1,13 @@
 "use client";
 
+import { authService } from "@/services/auth.service";
 import { User } from "@/type/auth.type";
 import { createContext, ReactNode, useEffect, useState } from "react";
 
 export interface AuthContextType {
   user: User | null;
-  token: string | null;
-  login: (token: string, user?: User) => void;
-  logout: () => void;
+  login: (user?: User) => void;
+  logout: () => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null);
@@ -18,35 +18,41 @@ interface AuthProvideProps {
 
 export function AuthProvider({ children }: AuthProvideProps) {
   const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
-    const savedToken = localStorage.getItem("access_token");
-    if (savedToken) {
-      setToken(savedToken);
-    }
+    const fetchCurrentUser = async () => {
+      try {
+        const response = await authService.me();
+
+        setUser(response.data.data);
+      } catch (e: any) {
+        setUser(null);
+      }
+    };
+
+    fetchCurrentUser();
   }, []);
 
-  const login = (token: string, user?: User) => {
-    localStorage.setItem("access_token", token);
-    setToken(token);
-
+  const login = (user?: User) => {
     if (user) {
       setUser(user);
     }
   };
 
-  const logout = () => {
-    localStorage.removeItem("access_token");
-    setToken(null);
-    setUser(null);
+  const logout = async () => {
+    try {
+      await authService.logout();
+    } catch (e: any) {
+      console.error("Logout failed:", e);
+    } finally {
+      setUser(null);
+    }
   };
 
   return (
     <AuthContext.Provider
       value={{
         user,
-        token,
         login,
         logout,
       }}
