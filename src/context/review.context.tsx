@@ -44,10 +44,6 @@ export function ReviewProvider({ children }: ReviewProviderProps) {
     }
   };
 
-  useEffect(() => {
-    fetchHistoryReview();
-  }, []);
-
   const clearReview = () => {
     setReview(null);
   };

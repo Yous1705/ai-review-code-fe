@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState, useMemo } from "react";
+import { FormEvent, useState, useMemo, useEffect } from "react";
 import { reviewService } from "@/services/review.service";
 import { useReview } from "@/hooks/useReview";
 import ReviewSideBar from "@/component/ReviewSideBar";
@@ -33,10 +33,14 @@ export default function ReviewPage() {
 
   const [code, setCode] = useState("");
   const [language, setLanguage] = useState("typescript");
-  const [isOpen, setIsOpen] = useState(true); // Default terbuka di layar lebar
+  const [isOpen, setIsOpen] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetchHistoryReview();
+  }, []);
 
   const handleSubmit = async (e?: FormEvent) => {
     if (e) e.preventDefault();
