@@ -83,6 +83,20 @@ export default function LoginPage() {
           </button>
         </form>
 
+        <div className="my-4 flex items-center gap-3">
+          <div className="h-px flex-1 bg-gray-300" />
+          <span className="text-sm text-gray-500">or</span>
+          <div className="h-px flex-1 bg-gray-300" />
+        </div>
+
+        <button
+          type="button"
+          onClick={() => authService.googleLogin()}
+          className="w-full rounded border px-4 py-2 font-medium transition hover:bg-gray-50"
+        >
+          Continue with Google
+        </button>
+
         <p className="mt-4 text-center text-sm">
           Belum punya akun?{" "}
           <a href="/auth/register" className="text-blue-600">

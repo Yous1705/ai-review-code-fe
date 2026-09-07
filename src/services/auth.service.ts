@@ -13,6 +13,10 @@ export const authService = {
     return response.data;
   },
 
+  googleLogin() {
+    window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/google`;
+  },
+
   async logout() {
     const response = await axiosInstance.post("/auth/logout");
     return response.data;
