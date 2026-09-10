@@ -19,6 +19,7 @@ import {
   Calendar,
   ArrowLeft,
 } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function ReviewHistoryPage() {
   const params = useParams();
@@ -26,6 +27,7 @@ export default function ReviewHistoryPage() {
   const id = params?.id;
 
   const { reviewHistory, historyTitle, fetchReviewById } = useReview();
+  const { logout } = useAuth();
 
   const [isOpen, setIsOpen] = useState(true); // Default terbuka di desktop
   const [copiedId, setCopiedId] = useState<string | null>(null);
@@ -123,6 +125,7 @@ export default function ReviewHistoryPage() {
         setIsOpen={setIsOpen}
         toogleSideBar={toogleSideBar}
         historyTitle={historyTitle}
+        logout={logout}
       />
 
       {/* Main Container: Bergeser secara halus mengikuti status isOpen di desktop */}
