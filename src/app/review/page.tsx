@@ -19,6 +19,7 @@ import {
   FileCode2,
   PanelLeftOpen,
 } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 const SUPPORTED_LANGUAGES = [
   { value: "typescript", label: "TypeScript", ext: "ts" },
@@ -30,6 +31,7 @@ const SUPPORTED_LANGUAGES = [
 
 export default function ReviewPage() {
   const { review, setReview, historyTitle, fetchHistoryReview } = useReview();
+  const { logout } = useAuth();
 
   const [code, setCode] = useState("");
   const [language, setLanguage] = useState("typescript");
@@ -133,6 +135,7 @@ export default function ReviewPage() {
         setIsOpen={setIsOpen}
         toogleSideBar={toogleSideBar}
         historyTitle={historyTitle}
+        logout={logout}
       />
 
       {/* Main Container: Margin kiri bergeser mengikuti kondisi isOpen di desktop */}

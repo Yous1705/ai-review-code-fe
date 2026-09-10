@@ -2,6 +2,7 @@
 
 import { authService } from "@/services/auth.service";
 import { User } from "@/type/auth.type";
+import { useRouter } from "next/navigation";
 import { createContext, ReactNode, useEffect, useState } from "react";
 
 export interface AuthContextType {
@@ -18,6 +19,8 @@ interface AuthProvideProps {
 
 export function AuthProvider({ children }: AuthProvideProps) {
   const [user, setUser] = useState<User | null>(null);
+
+  const router = useRouter();
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
@@ -42,6 +45,7 @@ export function AuthProvider({ children }: AuthProvideProps) {
   const logout = async () => {
     try {
       await authService.logout();
+      router.push("/auth/login");
     } catch (e: any) {
       console.error("Logout failed:", e);
     } finally {

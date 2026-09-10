@@ -18,12 +18,14 @@ interface SideBarProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   toogleSideBar: () => void;
   historyTitle: Review[];
+  logout: () => Promise<void>;
 }
 
 export default function ReviewSideBar({
   isOpen,
   toogleSideBar,
   historyTitle,
+  logout,
 }: SideBarProps) {
   const router = useRouter();
   const params = useParams();
@@ -195,6 +197,7 @@ export default function ReviewSideBar({
           <button
             type="button"
             className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-medium text-slate-500 transition hover:bg-rose-50 hover:text-rose-600"
+            onClick={logout}
           >
             <LogOut size={15} />
             <span>Sign Out</span>
